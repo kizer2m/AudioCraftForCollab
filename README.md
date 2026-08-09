@@ -1,10 +1,21 @@
-# AudioCraft
-![docs badge](https://github.com/facebookresearch/audiocraft/workflows/audiocraft_docs/badge.svg)
-![linter badge](https://github.com/facebookresearch/audiocraft/workflows/audiocraft_linter/badge.svg)
-![tests badge](https://github.com/facebookresearch/audiocraft/workflows/audiocraft_tests/badge.svg)
+# AudioCraft for Google Colab
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kizer2m/AudioCraftForCollab/blob/main/AudioCraft_Colab.ipynb)
+
+> ⚡ **Оптимизировано для запуска в Google Colab! / Optimized for Google Colab!**  
+> Подробная инструкция по запуску и использованию доступна в **[README_COLAB.md](file:///d:/Youtube/PROG_YT/AudioCraftForCollab/README_COLAB.md)** и в готовом ноутбуке **[AudioCraft_Colab.ipynb](file:///d:/Youtube/PROG_YT/AudioCraftForCollab/AudioCraft_Colab.ipynb)**.
+
+### 🚀 Быстрый запуск в Google Colab / Colab Quickstart
+1. Нажмите кнопку **[Open in Colab](https://colab.research.google.com/github/kizer2m/AudioCraftForCollab/blob/main/AudioCraft_Colab.ipynb)**.
+2. Подключите **T4 GPU** (`Среда выполнения` -> `Сменить тип среды выполнения` -> `T4 GPU`).
+3. Запустите ячейки по порядку: установка зависимостей -> запуск Web UI (`!python colab_app.py --share`).
+4. Откройте сгенерированную ссылку Gradio (`https://xxxx.gradio.live`).
+
+---
 
 AudioCraft is a PyTorch library for deep learning research on audio generation. AudioCraft contains inference and training code
-for two state-of-the-art AI generative models producing high-quality audio: AudioGen and MusicGen.
+for state-of-the-art AI generative models producing high-quality audio: AudioGen, MusicGen, MAGNeT, JASCO, and EnCodec.
+
 
 
 ## Installation

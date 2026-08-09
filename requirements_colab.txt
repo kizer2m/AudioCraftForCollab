@@ -1,0 +1,24 @@
+# Optimized requirements for Google Colab environment
+# Keeps pre-installed PyTorch / CUDA on Colab intact while fulfilling AudioCraft dependencies
+
+av>=11.0.0
+einops
+flashy>=0.0.1
+hydra-core>=1.1
+hydra_colorlog
+julius
+num2words
+numpy<2.0.0
+sentencepiece
+spacy>=3.7.0
+huggingface_hub
+tqdm
+transformers>=4.31.0
+demucs
+librosa
+soundfile
+gradio>=3.38.0
+torchmetrics
+encodec
+protobuf
+torchdiffeq
