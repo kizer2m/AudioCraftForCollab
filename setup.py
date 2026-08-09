@@ -32,7 +32,9 @@ try:
 except FileNotFoundError:
     long_description = DESCRIPTION
 
-REQUIRED = [i.strip() for i in open(HERE / 'requirements.txt') if not i.startswith('#')]
+req_file = HERE / 'requirements_colab.txt' if (HERE / 'requirements_colab.txt').exists() else HERE / 'requirements.txt'
+REQUIRED = [i.strip() for i in open(req_file) if not i.startswith('#')]
+
 
 setup(
     name=NAME,

@@ -1,5 +1,5 @@
 # AudioCraft dependencies optimized for modern PyTorch 2.x and Google Colab
-av>=11.0.0
+av
 einops
 flashy>=0.0.1
 hydra-core>=1.1
