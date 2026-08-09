@@ -1,96 +1,117 @@
-# AudioCraft for Google Colab
+# 🎵 AudioCraft for Google Colab
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kizer2m/AudioCraftForCollab/blob/main/AudioCraft_Colab.ipynb)
 
-> ⚡ **Оптимизировано для запуска в Google Colab! / Optimized for Google Colab!**  
-> Подробная инструкция по запуску и использованию доступна в **[README_COLAB.md](file:///d:/Youtube/PROG_YT/AudioCraftForCollab/README_COLAB.md)** и в готовом ноутбуке **[AudioCraft_Colab.ipynb](file:///d:/Youtube/PROG_YT/AudioCraftForCollab/AudioCraft_Colab.ipynb)**.
-
-### 🚀 Быстрый запуск в Google Colab / Colab Quickstart
-1. Нажмите кнопку **[Open in Colab](https://colab.research.google.com/github/kizer2m/AudioCraftForCollab/blob/main/AudioCraft_Colab.ipynb)**.
-2. Подключите **T4 GPU** (`Среда выполнения` -> `Сменить тип среды выполнения` -> `T4 GPU`).
-3. Запустите ячейки по порядку: установка зависимостей -> запуск Web UI (`!python colab_app.py --share`).
-4. Откройте сгенерированную ссылку Gradio (`https://xxxx.gradio.live`).
+> ⚡ **Optimized for Google Colab!**  
+> This repository is a Google Colab-optimized fork of Meta AI's [AudioCraft](https://github.com/facebookresearch/audiocraft) library. It includes a turnkey Colab Notebook, a unified Gradio Web UI, non-breaking dependency setups, and automatic VRAM memory management for T4, V100, and A100 GPU runtimes.
 
 ---
 
-AudioCraft is a PyTorch library for deep learning research on audio generation. AudioCraft contains inference and training code
-for state-of-the-art AI generative models producing high-quality audio: AudioGen, MusicGen, MAGNeT, JASCO, and EnCodec.
+## 🚀 Google Colab Quickstart
 
+1. Click the **[Open in Colab](https://colab.research.google.com/github/kizer2m/AudioCraftForCollab/blob/main/AudioCraft_Colab.ipynb)** badge above.
+2. Enable GPU Acceleration in Colab:  
+   `Runtime` -> `Change runtime type` -> select **T4 GPU** (or V100/A100).
+3. Execute the notebook cells in order:
+   - **Step 1**: Check GPU environment (`!nvidia-smi`)
+   - **Step 2**: Install FFmpeg and Colab-compatible dependencies (`!pip install -r requirements_colab.txt`)
+   - **Step 3**: Launch the Web UI (`!python colab_app.py --share`)
+4. Open the generated **`https://xxxx.gradio.live`** public link to start generating audio!
 
+---
 
-## Installation
-AudioCraft requires Python 3.9, PyTorch 2.1.0. To install AudioCraft, you can run the following:
+## ✨ Features & Colab Optimizations
 
-```shell
-# Best to make sure you have torch installed first, in particular before installing xformers.
-# Don't run this if you already have PyTorch installed.
-python -m pip install 'torch==2.1.0'
-# You might need the following before trying to install the packages
-python -m pip install setuptools wheel
-# Then proceed to one of the following
-python -m pip install -U audiocraft  # stable release
-python -m pip install -U git+https://git@github.com/facebookresearch/audiocraft#egg=audiocraft  # bleeding edge
-python -m pip install -e .  # or if you cloned the repo locally (mandatory if you want to train).
-python -m pip install -e '.[wm]'  # if you want to train a watermarking model
-```
+- 🎛️ **Unified Multi-Model Web UI (`colab_app.py`)**: Generate music, sound effects, and audio samples using **MusicGen**, **AudioGen**, and **MAGNeT** models from a single interactive interface.
+- 🧹 **VRAM Memory Hygiene**: Automatically calls `gc.collect()` and `torch.cuda.empty_cache()` between generation calls to prevent Out-Of-Memory (OOM) errors on Google Colab free T4 GPUs (~15GB VRAM).
+- ⚙️ **PyTorch 2.x & CUDA Compatibility**: Resolved strict version lockings (`torch==2.1.0`, `xformers<0.0.23`, `av==11.0.0`) to run seamlessly on Google Colab's default Python 3.10/3.11 environment.
+- 📓 **Interactive Notebook (`AudioCraft_Colab.ipynb`)**: Pre-configured cells for environment check, repository setup, Web UI launching, and direct Python API code execution with inline audio playback.
 
-We also recommend having `ffmpeg` installed, either through your system or Anaconda:
+---
+
+## 💻 Local & Manual Installation
+
+To install and run AudioCraft locally or on a custom server:
+
 ```bash
-sudo apt-get install ffmpeg
-# Or if you are using Anaconda or Miniconda
-conda install "ffmpeg<5" -c conda-forge
+# Install FFmpeg (required for audio processing)
+sudo apt-get update && sudo apt-get install -y ffmpeg
+
+# Clone the repository
+git clone https://github.com/kizer2m/AudioCraftForCollab.git
+cd AudioCraftForCollab
+
+# Install dependencies and package
+pip install -r requirements_colab.txt
+pip install -e .
 ```
 
-## Models
+---
 
-At the moment, AudioCraft contains the training code and inference code for:
-* [MusicGen](./docs/MUSICGEN.md): A state-of-the-art controllable text-to-music model.
-* [AudioGen](./docs/AUDIOGEN.md): A state-of-the-art text-to-sound model.
-* [EnCodec](./docs/ENCODEC.md): A state-of-the-art high fidelity neural audio codec.
-* [Multi Band Diffusion](./docs/MBD.md): An EnCodec compatible decoder using diffusion.
-* [MAGNeT](./docs/MAGNET.md): A state-of-the-art non-autoregressive model for text-to-music and text-to-sound.
-* [AudioSeal](./docs/WATERMARKING.md): A state-of-the-art audio watermarking.
-* [MusicGen Style](./docs/MUSICGEN_STYLE.md): A state-of-the-art text-and-style-to-music model.
-* [JASCO](./docs/JASCO.md): "High quality text-to-music model conditioned on chords, melodies and drum tracks"
+## 🎼 Models Supported
 
+AudioCraft contains inference and training code for Meta AI's state-of-the-art generative audio models:
 
-## Training code
+* **[MusicGen](./docs/MUSICGEN.md)**: Controllable text-to-music and melody-conditioned music generation.
+* **[AudioGen](./docs/AUDIOGEN.md)**: High-fidelity text-to-sound-effect generation.
+* **[MAGNeT](./docs/MAGNET.md)**: Fast non-autoregressive text-to-music and text-to-sound model.
+* **[EnCodec](./docs/ENCODEC.md)**: High-fidelity neural audio codec.
+* **[MultiBand Diffusion](./docs/MBD.md)**: EnCodec-compatible diffusion decoder for enhanced audio quality.
+* **[JASCO](./docs/JASCO.md)**: Text-to-music generation conditioned on chords, melodies, and drum tracks.
+* **[AudioSeal](./docs/WATERMARKING.md)**: Audio watermarking for AI-generated sound.
 
-AudioCraft contains PyTorch components for deep learning research in audio and training pipelines for the developed models.
-For a general introduction of AudioCraft design principles and instructions to develop your own training pipeline, refer to
-the [AudioCraft training documentation](./docs/TRAINING.md).
+---
 
-For reproducing existing work and using the developed training pipelines, refer to the instructions for each specific model
-that provides pointers to configuration, example grids and model/task-specific information and FAQ.
+## 🐍 Python API Usage Example
 
+You can also use AudioCraft directly in Python code or inside Colab notebook cells:
 
-## API documentation
+```python
+import torch
+from audiocraft.models import MusicGen
+from audiocraft.data.audio import audio_write
+from IPython.display import Audio, display
 
-We provide some [API documentation](https://facebookresearch.github.io/audiocraft/api_docs/audiocraft/index.html) for AudioCraft.
+# 1. Load pretrained MusicGen model
+model = MusicGen.get_pretrained('facebook/musicgen-small')
+model.set_generation_params(duration=10) # 10 seconds generation
 
+# 2. Generate music from text prompt
+descriptions = ['80s synthwave track with heavy bassline and punchy drums']
+print("Generating music...")
+wav = model.generate(descriptions) # [batch, channels, time]
 
-## FAQ
+# 3. Save to WAV audio file
+audio_data = wav[0].cpu()
+audio_write('generated_track', audio_data, model.sample_rate, strategy="loudness", add_suffix=False)
 
-#### Is the training code available?
-
-Yes! We provide the training code for [EnCodec](./docs/ENCODEC.md), [MusicGen](./docs/MUSICGEN.md),[Multi Band Diffusion](./docs/MBD.md) and [JASCO](./docs/JASCO.md).
-
-#### Where are the models stored?
-
-Hugging Face stored the model in a specific location, which can be overridden by setting the `AUDIOCRAFT_CACHE_DIR` environment variable for the AudioCraft models.
-In order to change the cache location of the other Hugging Face models, please check out the [Hugging Face Transformers documentation for the cache setup](https://huggingface.co/docs/transformers/installation#cache-setup).
-Finally, if you use a model that relies on Demucs (e.g. `musicgen-melody`) and want to change the download location for Demucs, refer to the [Torch Hub documentation](https://pytorch.org/docs/stable/hub.html#where-are-my-downloaded-models-saved).
-
-
-## License
-* The code in this repository is released under the MIT license as found in the [LICENSE file](LICENSE).
-* The models weights in this repository are released under the CC-BY-NC 4.0 license as found in the [LICENSE_weights file](LICENSE_weights).
-
-
-## Citation
-
-For the general framework of AudioCraft, please cite the following.
+# 4. Play audio inline (in Jupyter/Colab)
+display(Audio('generated_track.wav'))
 ```
+
+---
+
+## ❓ FAQ
+
+#### Where are pretrained model weights stored?
+Hugging Face stores downloaded models in `~/.cache/huggingface/hub`. You can override the AudioCraft model cache location by setting the `AUDIOCRAFT_CACHE_DIR` environment variable.
+
+#### Is training code provided?
+Yes, training pipelines for EnCodec, MusicGen, AudioGen, MultiBand Diffusion, and JASCO are included in the repository. Refer to the [Training Documentation](./docs/TRAINING.md) for details.
+
+---
+
+## 📜 License
+- **Code**: Released under the [MIT License](LICENSE).
+- **Model Weights**: Released under the [CC-BY-NC 4.0 License](LICENSE_weights).
+
+---
+
+## 📑 Citation
+
+If you use AudioCraft or MusicGen in your research, please cite:
+
+```bibtex
 @inproceedings{copet2023simple,
     title={Simple and Controllable Music Generation},
     author={Jade Copet and Felix Kreuk and Itai Gat and Tal Remez and David Kant and Gabriel Synnaeve and Yossi Adi and Alexandre Défossez},
@@ -98,6 +119,3 @@ For the general framework of AudioCraft, please cite the following.
     year={2023},
 }
 ```
-
-When referring to a specific model, please cite as mentioned in the model specific README, e.g
-[./docs/MUSICGEN.md](./docs/MUSICGEN.md), [./docs/AUDIOGEN.md](./docs/AUDIOGEN.md), etc.
